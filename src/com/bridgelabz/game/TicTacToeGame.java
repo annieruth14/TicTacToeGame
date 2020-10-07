@@ -19,6 +19,7 @@ public class TicTacToeGame {
 		obj.showBoard(userBoard);
 		String random = obj.checkWhoStartsFirst();
 		boolean checkWinner = obj.checkWinner(userBoard, userLetter);
+		int computerMove = obj.computersMove(board, computerLetter);
 	}
 
 	// Creating a board
@@ -32,7 +33,7 @@ public class TicTacToeGame {
 
 	// Choose a letter
 	public char chooseLetter() {
-		System.out.println("Choose a letter");
+		System.out.println("Choose a letter: X or O");
 		char letter = userInput.next().charAt(0);
 		return letter;
 	}
@@ -88,5 +89,17 @@ public class TicTacToeGame {
 			return true;
 		else
 			return false;
+	}
+
+	// Computers turn
+	public int computersMove(char board[], char computerLetter) {
+		for (int index = 1; index < board.length; index++) {
+			if (board[index] == ' ') {
+				makeMove(board, computerLetter);
+				if (checkWinner(board, computerLetter))
+					return index;
+			}
+		}
+		return 0;
 	}
 }
