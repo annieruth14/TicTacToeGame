@@ -104,7 +104,7 @@ public class TicTacToeGame {
 		return 0;
 	}
 
-	// Returns winning move of computer or user 
+	// Returns winning move of computer or user
 	// If none then any of the empty corner index is returned
 	public int move(char board[], char computerLetter, char userLetter) {
 		int computerMove = winningMove(board, computerLetter);
@@ -113,11 +113,20 @@ public class TicTacToeGame {
 		int userMove = winningMove(board, userLetter);
 		if (userMove != 0)
 			return userMove;
-		int corner[] = {1 , 3 , 7 , 9};
+		int corner[] = { 1, 3, 7, 9 };
 		int cornerIndex = 0;
-		for(int index = 0; index< board.length;index++) {
-			if((index==corner[cornerIndex]) && (index == ' ')) {
+		for (int index = 0; index < board.length; index++) {
+			if ((index == corner[cornerIndex]) && (index == ' ')) {
 				return corner[cornerIndex];
+			}
+		}
+		if (board[5] == ' ')
+			return 5;
+		int sides[] = { 2, 4, 6, 8 };
+		int sideIndex = 0;
+		for (int index = 0; index < board.length; index++) {
+			if ((index == sides[sideIndex]) && (index == ' ')) {
+				return sides[sideIndex];
 			}
 		}
 		return 0;
