@@ -74,16 +74,17 @@ public class TicTacToeGame {
 			player = "Computer";
 		return player;
 	}
-	//
+
+	// Winning condition
 	public boolean checkWinner(char board[], char input) {
-		if((board[1]==input && board[2]==input && board[3]==input)
-			|| (board[4]==input && board[5]==input && board[6]==input)
-			|| (board[7]==input && board[8]==input && board[9]==input)
-			|| (board[1]==input && board[4]==input && board[7]==input)
-			|| (board[2]==input && board[5]==input && board[8]==input)
-			|| (board[3]==input && board[6]==input && board[9]==input)
-			|| (board[1]==input && board[5]==input && board[9]==input)
-			|| (board[3]==input && board[5]==input && board[7]==input))
+		if ((board[1] == input && board[2] == input && board[3] == input)
+				|| (board[4] == input && board[5] == input && board[6] == input)
+				|| (board[7] == input && board[8] == input && board[9] == input)
+				|| (board[1] == input && board[4] == input && board[7] == input)
+				|| (board[2] == input && board[5] == input && board[8] == input)
+				|| (board[3] == input && board[6] == input && board[9] == input)
+				|| (board[1] == input && board[5] == input && board[9] == input)
+				|| (board[3] == input && board[5] == input && board[7] == input))
 			return true;
 		else
 			return false;
