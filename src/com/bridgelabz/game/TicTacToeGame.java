@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class TicTacToeGame {
 	Scanner userInput = new Scanner(System.in);
 	public static TicTacToeGame obj = new TicTacToeGame();
+	public static final int HEAD = 0;
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic tac toe game");
@@ -16,10 +17,11 @@ public class TicTacToeGame {
 		obj.showBoard(board);
 		char userBoard[] = obj.makeMove(board, userLetter);
 		obj.showBoard(userBoard);
-		String random = obj.startsFirst();
+		String random = obj.checkWhoStartsFirst();
+		boolean checkWinner = obj.checkWinner(userBoard, userLetter);
 	}
 
-	// UC1 Creating a board
+	// Creating a board
 	public char[] createBoard() {
 		char board[] = new char[10];
 		for (int index = 1; index < board.length; index++) {
@@ -28,14 +30,14 @@ public class TicTacToeGame {
 		return board;
 	}
 
-	// UC2 Choose a letter
+	// Choose a letter
 	public char chooseLetter() {
 		System.out.println("Choose a letter");
 		char letter = userInput.next().charAt(0);
 		return letter;
 	}
 
-	// UC3 Display the board
+	// Display the board
 	public void showBoard(char board[]) {
 		System.out.println("Board");
 		System.out.println(" " + board[1] + " | " + board[2] + " | " + board[3]);
@@ -45,7 +47,7 @@ public class TicTacToeGame {
 		System.out.println(" " + board[7] + " | " + board[8] + " | " + board[9]);
 	}
 
-	// UC4 Make a move
+	// Make a move
 	public char[] makeMove(char board[], char userLetter) {
 		try {
 			System.out.println("Select a position to move: ");
@@ -61,17 +63,29 @@ public class TicTacToeGame {
 		return board;
 	}
 
-	// UC6 Check who plays first
-	public String startsFirst() {
+	// Check who plays first
+	public String checkWhoStartsFirst() {
 		Random random = new Random();
 		int randomNo = random.nextInt(2);
-		System.out.println(randomNo);
 		String player;
-		if (randomNo == 0)
+		if (randomNo == HEAD)
 			player = "User";
 		else
 			player = "Computer";
-		System.out.println(player);
 		return player;
+	}
+	//
+	public boolean checkWinner(char board[], char input) {
+		if((board[1]==input && board[2]==input && board[3]==input)
+			|| (board[4]==input && board[5]==input && board[6]==input)
+			|| (board[7]==input && board[8]==input && board[9]==input)
+			|| (board[1]==input && board[4]==input && board[7]==input)
+			|| (board[2]==input && board[5]==input && board[8]==input)
+			|| (board[3]==input && board[6]==input && board[9]==input)
+			|| (board[1]==input && board[5]==input && board[9]==input)
+			|| (board[3]==input && board[5]==input && board[7]==input))
+			return true;
+		else
+			return false;
 	}
 }
