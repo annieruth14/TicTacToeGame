@@ -1,5 +1,6 @@
 package com.bridgelabz.game;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
@@ -15,6 +16,7 @@ public class TicTacToeGame {
 		obj.showBoard(board);
 		char userBoard[] = obj.makeMove(board, userLetter);
 		obj.showBoard(userBoard);
+		String random = obj.startsFirst();
 	}
 
 	// UC1 Creating a board
@@ -57,5 +59,19 @@ public class TicTacToeGame {
 			System.out.println("Index out of range");
 		}
 		return board;
+	}
+
+	// UC6 Check who plays first
+	public String startsFirst() {
+		Random random = new Random();
+		int randomNo = random.nextInt(2);
+		System.out.println(randomNo);
+		String player;
+		if (randomNo == 0)
+			player = "User";
+		else
+			player = "Computer";
+		System.out.println(player);
+		return player;
 	}
 }
