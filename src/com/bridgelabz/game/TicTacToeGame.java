@@ -19,7 +19,7 @@ public class TicTacToeGame {
 		obj.showBoard(userBoard);
 		String random = obj.checkWhoStartsFirst();
 		boolean checkWinner = obj.checkWinner(userBoard, userLetter);
-		int computerMove = obj.computersMove(board, computerLetter);
+		int computerMove = obj.move(board, userLetter, computerLetter);
 	}
 
 	// Creating a board
@@ -61,6 +61,7 @@ public class TicTacToeGame {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Index out of range");
 		}
+		showBoard(board);
 		return board;
 	}
 
@@ -91,8 +92,8 @@ public class TicTacToeGame {
 			return false;
 	}
 
-	// Computers turn
-	public int computersMove(char board[], char computerLetter) {
+	// Winning move
+	public int winningMove(char board[], char computerLetter) {
 		for (int index = 1; index < board.length; index++) {
 			if (board[index] == ' ') {
 				makeMove(board, computerLetter);
@@ -100,6 +101,17 @@ public class TicTacToeGame {
 					return index;
 			}
 		}
+		return 0;
+	}
+
+	// Move of computer and user and also user checks if opponent can win
+	public int move(char board[], char computerLetter, char userLetter) {
+		int computerMove = winningMove(board, computerLetter);
+		if (computerMove != 0)
+			return computerMove;
+		int userMove = winningMove(board, userLetter);
+		if (userMove != 0)
+			return userMove;
 		return 0;
 	}
 }
