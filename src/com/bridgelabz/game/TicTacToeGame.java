@@ -16,37 +16,42 @@ public class TicTacToeGame {
 		System.out.println("User: " + userLetter + " Computer: " + computerLetter);
 		String player = obj.checkWhoStartsFirst();
 		System.out.println(player + " starts first ");
-		while(true) {
-			if(player.equals("User")) {
+		int flag = 1;
+		while (flag == 1) {
+			if (player.equals("User")) {
 				obj.showBoard(board);
+				System.out.println(" Users move ");
 				int position = obj.makeUserMove(board, userLetter);
-				obj.game(board, position, userLetter );
+				System.out.println("heyaaa  ");
+				boolean res = obj.game(board, position, userLetter);
+				System.out.println("uffff");
 				player = "Computer";
-			}
-			else {
+			} else {
 				obj.showBoard(board);
-				int position = obj.makeComputerMove(board, computerLetter);
-				obj.game(board, position, computerLetter);
+				System.out.println("Computers move");
+				int position = obj.move(board, computerLetter, userLetter);
+				System.out.println(position + "   poooosssssss");
+				boolean res = obj.game(board, position, computerLetter);
 				player = "User";
 			}
 		}
 	}
-	
+
 	// Checks if there is a tie or win
-		public void game(char[] board, int move, char letter) {
-			makeMove(board, move, letter);
+	public boolean game(char[] board, int move, char letter) {
+		makeMove(board, move, letter);
+		if (checkWinner(board, letter) == true) {
+			System.out.println("The player won!!");
 			showBoard(board);
-			if(checkWinner(board, letter)==true) {
-				System.out.println("The player won!!");
-				showBoard(board);
-				return ;
-			}
-			if(boardIsFull(board)) {
-				System.out.println("Game is a tie");
-				showBoard(board);
-				return;
-			}
+			return true;
 		}
+		if (boardIsFull(board)) {
+			System.out.println("Game is a tie");
+			showBoard(board);
+			return true;
+		}
+		return false;
+	}
 
 	// Creating a board
 	public char[] createBoard() {
@@ -89,13 +94,14 @@ public class TicTacToeGame {
 		}
 		return 0;
 	}
-	
-	public void makeMove(char board[] , int position, char letter) {
+
+	public void makeMove(char board[], int position, char letter) {
 		try {
 			for (int index = 1; index < board.length; index++) {
 				if (board[position] == ' ') {
 					board[position] = letter;
-				}
+				} else
+					return;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Index out of range");
@@ -132,16 +138,26 @@ public class TicTacToeGame {
 	// Winning move
 	public int makeComputerMove(char board[], char computerLetter) {
 		for (int index = 1; index < board.length; index++) {
-			if (board[index] == ' ') {
-				makeMove(board, index, computerLetter);
-				if (checkWinner(board, computerLetter))
-					return index;
+			char[] copy = getCopy(board);
+			if (copy[index] == ' ') {
+				makeMove(copy, index, computerLetter);
+				if (checkWinner(copy, computerLetter))
+					System.out.println("Index   " + index);
+				return index;
 			}
 		}
 		return 0;
 	}
 
-	// Returns winning move of computer or user
+	public char[] getCopy(char[] board) {
+		char[] copy = new char[board.length];
+		for (int i = 1; i < copy.length; i++) {
+			copy[i] = board[i];
+		}
+		return copy;
+	}
+
+	// Returns winning move of computer
 	// If none then any of the empty corner index is returned
 	// If none then center or any side is returned
 	public int move(char board[], char computerLetter, char userLetter) {
@@ -172,20 +188,10 @@ public class TicTacToeGame {
 
 	// Checks if board is full
 	private boolean boardIsFull(char[] board) {
-		for(int index=0;index<board.length;index++) {
-			if(board[index]== ' ')
+		for (int index = 0; index < board.length; index++) {
+			if (board[index] == ' ')
 				return false;
 		}
 		return false;
 	}
 }
-
-
-
-
-
-
-
-
-
-
